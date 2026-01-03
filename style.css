@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    touch-action: manipulation; /* Remove double-tap zoom */
+}
+
+#app {
+    max-width: 100%;
+    margin: 0;
+    padding: 15px;
+    background: white;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(45deg, #2196F3, #21CBF3);
+    color: white;
+    border-radius: 10px;
+}
+
+header h1 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+.controls {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.language-selector {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.language-selector label {
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.language-selector select {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.btn {
+    padding: 15px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 100px;
+    touch-action: manipulation;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+}
+
+.btn-success {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(45deg, #dc3545, #c82333);
+    color: white;
+}
+
+.transcription-area {
+    margin-bottom: 20px;
+}
+
+.transcription-area h3 {
+    margin-bottom: 10px;
+    color: #495057;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.transcription-box {
+    min-height: 150px;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #343a40;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.recording {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+    #app {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 1.5em;
+    }
+    
+    .btn {
+        padding: 12px 16px;
+        font-size: 14px;
+        min-width: 80px;
+    }
+    
+    .transcription-box {
+        font-size: 16px;
+        min-height: 120px;
+    }
+}
+
+/* iPhone X and newer notch support */
+@supports (padding-top: env(safe-area-inset-top)) {
+    #app {
+        padding-top: env(safe-area-inset-top);
+    }
+}

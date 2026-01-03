@@ -1,0 +1,15 @@
+{
+    "name": "Voice Transcription PWA",
+    "short_name": "Voice Transcribe",
+    "description": "Voice to text transcription - works offline",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2196F3",
+    "orientation": "portrait",
+    "categories": ["productivity", "utilities"],
+    "lang": "en",
+    "dir": "ltr",
+    "scope": "/",
+    "icons": []
+}

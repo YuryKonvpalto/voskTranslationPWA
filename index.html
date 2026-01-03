@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Voice Transcription PWA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Voice Transcribe">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>🎤 Voice Transcription</h1>
+            <p>Tap the microphone and start speaking</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <div class="language-selector">
+                    <label for="language">Language:</label>
+                    <select id="language">
+                        <option value="en">English</option>
+                        <option value="ru">Русский</option>
+                        <option value="cn">中文</option>
+                    </select>
+                </div>
+
+                <div class="model-status">
+                    <span id="model-status">Status: Not ready</span>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="load-model" class="btn btn-primary">
+                        🎯 Start
+                    </button>
+                    <button id="start-recording" class="btn btn-success" disabled>
+                        🎙️ Record
+                    </button>
+                    <button id="stop-recording" class="btn btn-danger" disabled>
+                        ⏹️ Stop
+                    </button>
+                </div>
+            </div>
+
+            <div class="transcription-area">
+                <h3>What you said:</h3>
+                <div id="transcription" class="transcription-box">
+                    Press "Start" to begin...
+                </div>
+            </div>
+        </main>
+
+        <div id="status" class="status-bar">
+            Ready
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
