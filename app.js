@@ -3,6 +3,7 @@ class VoskTranscriptionApp {
         this.recognizer = null;
         this.isRecording = false;
         this.recognition = null;
+        this.isModelLoaded = true; // Always ready - no loading needed
         
         this.init();
     }
@@ -11,7 +12,16 @@ class VoskTranscriptionApp {
         this.setupEventListeners();
         this.setupServiceWorker();
         this.setupSpeechRecognition();
-        this.updateStatus('Ready');
+        
+        // Auto-set Russian language
+        document.getElementById('language').value = 'ru';
+        this.onLanguageChange(); // Initialize Russian
+        
+        this.updateStatus('Готов к записи'); // "Ready to record" in Russian
+        this.updateModelStatus('Готов'); // "Ready" in Russian
+        
+        // Enable recording immediately
+        document.getElementById('start-recording').disabled = false;
     }
 
     setupSpeechRecognition() {
@@ -23,7 +33,7 @@ class VoskTranscriptionApp {
             // Configure recognition for mobile
             this.recognition.continuous = true;
             this.recognition.interimResults = true;
-            this.recognition.lang = 'en-US';
+            this.recognition.lang = 'ru-RU'; // Russian by default
             
             this.recognition.onresult = (event) => {
                 let finalTranscript = '';
@@ -46,7 +56,7 @@ class VoskTranscriptionApp {
             
             this.recognition.onerror = (event) => {
                 console.error('Speech recognition error:', event.error);
-                this.updateStatus(`Recognition error: ${event.error}`, 'error');
+                this.updateStatus(`Ошибка распознавания: ${event.error}`, 'error');
                 this.stopRecording();
             };
             
@@ -60,12 +70,11 @@ class VoskTranscriptionApp {
             console.log('Speech recognition initialized for mobile');
         } else {
             console.warn('Web Speech API not supported in this browser');
-            this.updateStatus('Error: Speech recognition not supported', 'error');
+            this.updateStatus('Ошибка: Распознавание речи не поддерживается', 'error');
         }
     }
 
     setupEventListeners() {
-        document.getElementById('load-model')?.addEventListener('click', () => this.loadModel());
         document.getElementById('start-recording')?.addEventListener('click', () => this.startRecording());
         document.getElementById('stop-recording')?.addEventListener('click', () => this.stopRecording());
         document.getElementById('language')?.addEventListener('change', () => this.onLanguageChange());
@@ -106,7 +115,7 @@ class VoskTranscriptionApp {
         if (modelStatus) {
             modelStatus.textContent = `Status: ${status}`;
             
-            if (status === 'Ready') {
+            if (status === 'Готов') {
                 modelStatus.parentElement.classList.add('loaded');
             } else {
                 modelStatus.parentElement.classList.remove('loaded');
@@ -115,75 +124,67 @@ class VoskTranscriptionApp {
     }
 
     getLanguageCode() {
-        const language = document.getElementById('language')?.value || 'en';
+        const language = document.getElementById('language')?.value || 'ru';
         const languageCodes = {
             en: 'en-US',
             ru: 'ru-RU',
             cn: 'zh-CN'
         };
-        return languageCodes[language] || 'en-US';
+        return languageCodes[language] || 'ru-RU';
     }
 
-    loadModel() {
-        const language = this.getLanguageCode();
-        
-        try {
-            this.updateStatus('Preparing speech recognition...', 'loading');
-            this.updateModelStatus('Loading...');
+    getLanguageName() {
+        const names = { 
+            en: 'English', 
+            ru: 'Русский', 
+            cn: '中文' 
+        };
+        return names[document.getElementById('language').value] || 'Русский';
+    }
+
+    onLanguageChange() {
+        if (this.recognition) {
+            this.recognition.lang = this.getLanguageCode();
+            this.updateStatus(`Язык изменен: ${this.getLanguageName()}`);
             
-            if (this.recognition) {
-                this.recognition.lang = language;
-            }
-            
-            // Simulate loading for better UX
-            setTimeout(() => {
-                this.isModelLoaded = true;
-                this.updateStatus('Ready to record', 'success');
-                this.updateModelStatus('Ready');
-                
-                // Enable recording
-                const startRecordingBtn = document.getElementById('start-recording');
-                if (startRecordingBtn) {
-                    startRecordingBtn.disabled = false;
-                }
-            }, 1000);
-            
-        } catch (error) {
-            console.error('Error loading speech recognition:', error);
-            this.updateStatus(`Error: ${error.message}`, 'error');
-            this.updateModelStatus('Failed');
+            // Update transcription placeholder
+            const lang = document.getElementById('language').value;
+            const placeholders = {
+                en: 'Ready to record in English...',
+                ru: 'Готов к записи на русском...',
+                cn: '准备用中文录音...'
+            };
+            document.getElementById('transcription').textContent = placeholders[lang];
         }
     }
 
-    async startRecording() {
+    startRecording() {
         if (this.isRecording || !this.recognition) return;
         
         try {
             // Request microphone permission
-            await navigator.mediaDevices.getUserMedia({ audio: true });
-            
-            this.recognition.start();
-            this.isRecording = true;
-            
-            const startBtn = document.getElementById('start-recording');
-            const stopBtn = document.getElementById('stop-recording');
-            
-            if (startBtn) startBtn.disabled = true;
-            if (stopBtn) {
-                stopBtn.disabled = false;
-                stopBtn.classList.add('recording');
-            }
-            
-            this.updateStatus('Listening... speak now!', 'recording');
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
+                this.recognition.start();
+                this.isRecording = true;
+                
+                const startBtn = document.getElementById('start-recording');
+                const stopBtn = document.getElementById('stop-recording');
+                
+                if (startBtn) startBtn.disabled = true;
+                if (stopBtn) {
+                    stopBtn.disabled = false;
+                    stopBtn.classList.add('recording');
+                }
+                
+                this.updateStatus('Слушаю... говорите!'); // "Listening... speak!"
+            }).catch(error => {
+                console.error('Microphone permission denied:', error);
+                this.updateStatus('Ошибка: Доступ к микрофону запрещен', 'error');
+            });
             
         } catch (error) {
             console.error('Error starting recording:', error);
-            this.updateStatus(`Recording error: ${error.message}`, 'error');
-            
-            // Handle permission denied
-            if (error.name === 'NotAllowedError') {
-                alert('Microphone access denied. Please enable microphone permissions in your browser settings.');
-            }
+            this.updateStatus(`Ошибка записи: ${error.message}`, 'error');
         }
     }
 
@@ -202,7 +203,7 @@ class VoskTranscriptionApp {
             stopBtn.classList.remove('recording');
         }
         
-        this.updateStatus('Recording stopped', 'info');
+        this.updateStatus('Запись остановлена'); // "Recording stopped"
     }
 
     updateTranscription(text) {
@@ -211,17 +212,6 @@ class VoskTranscriptionApp {
             transcriptionDiv.textContent = text;
             // Scroll to bottom to show latest text
             transcriptionDiv.scrollTop = transcriptionDiv.scrollHeight;
-        }
-    }
-
-    onLanguageChange() {
-        this.isModelLoaded = false;
-        const startBtn = document.getElementById('start-recording');
-        if (startBtn) startBtn.disabled = true;
-        this.updateModelStatus('Not ready');
-        
-        if (this.recognition) {
-            this.recognition.lang = this.getLanguageCode();
         }
     }
 }
