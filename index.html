@@ -15,7 +15,10 @@
     <div id="app">
         <header>
             <h1>Voice Transcription</h1>
-            <p>Tap the microphone and start speaking</p>
+            <!-- <p>Tap the microphone and start speaking</p> -->
+                 <div class="model-status">
+                    <span id="model-status">Status: Ready</span>
+                </div>
         </header>
 
         <main>
@@ -23,15 +26,15 @@
                 <div class="language-selector">
                     <label for="language">Language:</label>
                     <select id="language">
-                        <option value="en">English</option>
-                        <option value="ru" selected>Русский</option>
+                         <option value="en" selected>English</option>
+                        <option value="ru" >Русский</option>
                         <option value="cn">中文</option>
                     </select>
                 </div>
 
-                <div class="model-status">
+                <!-- <div class="model-status">
                     <span id="model-status">Status: Ready</span>
-                </div>
+                </div> -->
 
                 <div class="action-buttons">
                     <!-- REMOVED: Start button -->
@@ -50,6 +53,12 @@
                     Ready to record in Russian...
                 </div>
             </div>
+
+            <!-- Add after the existing final textarea -->
+            <div style="margin-top: 15px;">
+                <button id="translateBtn" class="btn" disabled>Translate</button>
+            </div>
+            <textarea id="translationOutput" class="text" placeholder="Translation will appear here" readonly></textarea>
         </main>
 
         <div id="status" class="status-bar">
@@ -58,5 +67,6 @@
     </div>
 
     <script src="app.js"></script>
+      <script src="translation.js"></script>
 </body>
 </html>

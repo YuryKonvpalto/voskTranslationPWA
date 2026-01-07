@@ -1,3 +1,4 @@
+
 class VoskTranscriptionApp {
     constructor() {
         this.recognizer = null;
@@ -18,10 +19,13 @@ class VoskTranscriptionApp {
         this.onLanguageChange(); // Initialize Russian
         
         this.updateStatus('Готов к записи'); // "Ready to record" in Russian
-        this.updateModelStatus('Готов'); // "Ready" in Russian
+        this.updateModelStatus('Ready'); // "Ready" in Russian
         
         // Enable recording immediately
         document.getElementById('start-recording').disabled = false;
+
+        // Initialize button labels
+         this.updateButtonLabels();
     }
 
     setupSpeechRecognition() {
@@ -115,7 +119,7 @@ class VoskTranscriptionApp {
         if (modelStatus) {
             modelStatus.textContent = `Status: ${status}`;
             
-            if (status === 'Готов') {
+            if (status === 'Готов' || status === 'Ready') {
                 modelStatus.parentElement.classList.add('loaded');
             } else {
                 modelStatus.parentElement.classList.remove('loaded');
@@ -150,12 +154,15 @@ class VoskTranscriptionApp {
             // Update transcription placeholder
             const lang = document.getElementById('language').value;
             const placeholders = {
-                en: 'Ready to record in English...',
-                ru: 'Готов к записи на русском...',
-                cn: '准备用中文录音...'
+                // en: 'Ready to record in English...',
+                // ru: 'Готов к записи на русском...',
+                // cn: '准备用中文录音...'
             };
             document.getElementById('transcription').textContent = placeholders[lang];
+
+             this.updateButtonLabels();
         }
+        this.updateButtonLabels();
     }
 
     startRecording() {
@@ -213,7 +220,44 @@ class VoskTranscriptionApp {
             // Scroll to bottom to show latest text
             transcriptionDiv.scrollTop = transcriptionDiv.scrollHeight;
         }
+
+        this.updateButtonLabels();
     }
+
+  // Update the updateButtonLabels() method:
+// Update the updateButtonLabels() method:
+updateButtonLabels() {
+    const lang = document.getElementById('language').value;
+    const recordButton = document.getElementById('start-recording');
+    const stopButton = document.getElementById('stop-recording');
+    const translateBtn = document.getElementById('translateBtn');
+    const transcriptionBox = document.getElementById('transcription');
+    
+    // Check if there's actual transcribed text (not just placeholder)
+    const hasTranscription = transcriptionBox && 
+                           transcriptionBox.textContent.trim() && 
+                           !transcriptionBox.textContent.includes('Ready to record') && 
+                           !transcriptionBox.textContent.includes('Готов к записи') && 
+                           !transcriptionBox.textContent.includes('准备用中文录音');
+    
+    if (lang === 'zh' || lang === 'cn') {  
+        if (recordButton) recordButton.textContent = '开始录音';
+        if (stopButton) stopButton.textContent = '停止录音';
+        if (translateBtn) {
+            translateBtn.textContent = '翻译';
+            translateBtn.disabled = !hasTranscription;
+        }
+    } else {  
+        if (recordButton) recordButton.textContent = 'Record';
+        if (stopButton) stopButton.textContent = 'Stop';
+        if (translateBtn) {
+            translateBtn.textContent = 'Translate';
+            translateBtn.disabled = !hasTranscription;
+        }
+    }
+}
+
+
 }
 
 // Initialize app when DOM is loaded

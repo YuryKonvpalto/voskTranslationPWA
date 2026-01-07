@@ -25,19 +25,19 @@ body {
 /* Header */
 header {
     text-align: center;
-    padding: 5px 0;
+    padding: 2px 0;
     color: white;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
 }
 
 header h1 {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin-bottom: 2px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 header p {
-    font-size: 1.1rem;
+    font-size: .5rem;
     opacity: 0.9;
 }
 
@@ -83,8 +83,8 @@ main {
 
 .model-status {
     text-align: center;
-    margin: 5px 0;
-    padding: 5px;
+    margin: 2px 0;
+    padding: 1px;
     background: #f8f9fa;
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -106,7 +106,7 @@ main {
     justify-content: center;
     align-items: center;
     gap: 20px;
-    margin: 30px 0;
+    margin: 10px 0;
     flex-direction: row; /* Force horizontal */
     flex-wrap: nowrap; /* Prevent wrapping */
 }
@@ -179,7 +179,7 @@ main {
     background: #f8f9fa;
     border: 2px solid #e9ecef;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     min-height: 150px;
     font-size: 18px;
     line-height: 1.6;
@@ -236,6 +236,63 @@ main {
     background: #ff9800;
 }
 
+
+/* Add these styles at the bottom of the file */
+#translateBtn {
+    display: block;
+    margin: 15px auto;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#translateBtn:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+#translateBtn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+#translationOutput {
+    background: #f8f9fa;
+    width: 100%;
+    min-height: 150px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: left;
+    overflow-y: auto;
+}
+
+/* #translationOutput {
+background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 150px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+    text-align: left;
+    overflow-y: auto;
+    max-height: 300px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+} */
+
+
+
+
 @keyframes recording-pulse {
     0% { opacity: 1; }
     50% { opacity: 0.7; }
@@ -253,7 +310,7 @@ main {
     }
     
     main {
-        padding: 20px;
+        padding: 10px;
     }
     
     .btn {
