@@ -10,24 +10,24 @@
     "categories": ["productivity", "utilities"],
     "lang": "en",
     "dir": "ltr",
-    "scope": "/voskTranslationPWA/",
+    "scope": "/",
     "icons": [
       {
-    "src": "voskTranslationPWA/assets/meditation.png",
+    "src": "assets/meditation.png",
     "sizes": "192x192",
     "type": "image/png"
   }
     ],
     "screenshots": [
   {
-    "src": "voskTranslationPWA/assets/meditationlarge.png",
+    "src": "assets/meditationlarge.png",
     "sizes": "320x320",
     "type": "image/png",
     "form_factor": "narrow"
   },
 
   {
-    "src": "voskTranslationPWA/assets/meditationlarge.png",
+    "src": "assets/meditationlarge.png",
     "sizes": "320x320",
     "type": "image/png",
     "form_factor": "wide"
@@ -36,3 +36,4 @@
 ]
 
 }
+
