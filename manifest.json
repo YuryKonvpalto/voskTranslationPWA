@@ -2,7 +2,7 @@
     "name": "Voice Transcription PWA",
     "short_name": "Voice Transcribe",
     "description": "Voice to text transcription - works offline",
-    "start_url": "/",
+    "start_url": "/voskTranslationPWA/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#2196F3",
@@ -10,28 +10,29 @@
     "categories": ["productivity", "utilities"],
     "lang": "en",
     "dir": "ltr",
-    "scope": "/",
+    "scope": "/voskTranslationPWA/",
     "icons": [
       {
-    "src": "assets/meditation.png",
+    "src": "voskTranslationPWA/assets/meditation.png",
     "sizes": "192x192",
     "type": "image/png"
   }
     ],
     "screenshots": [
   {
-    "src": "assets/meditationlarge.png",
+    "src": "voskTranslationPWA/assets/meditationlarge.png",
     "sizes": "320x320",
     "type": "image/png",
     "form_factor": "narrow"
   },
 
   {
-    "src": "assets/meditationlarge.png",
+    "src": "voskTranslationPWA/assets/meditationlarge.png",
     "sizes": "320x320",
     "type": "image/png",
     "form_factor": "wide"
   }
 
 ]
+
 }
