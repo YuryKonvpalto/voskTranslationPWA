@@ -98,7 +98,7 @@ class VoskTranscriptionApp {
     async setupServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
-                const registration = await navigator.serviceWorker.register('./sw.js');
+                const registration = await navigator.serviceWorker.register('./voskTranslationPWA/sw.js');
                 console.log('ServiceWorker registration successful');
             } catch (error) {
                 console.log('ServiceWorker registration failed:', error);
@@ -265,4 +265,5 @@ document.addEventListener('DOMContentLoaded', () => {
     new VoskTranscriptionApp();
 
 });
+
 
